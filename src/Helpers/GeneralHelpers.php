@@ -9,6 +9,7 @@ use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
 use SilverStripe\Assets\Image;
 use SilverStripe\Assets\Storage\AssetStore;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Tab;
 
@@ -126,4 +127,20 @@ class GeneralHelpers
 
         return $File;
     }
+
+    // Get file assets file, also when not published yet
+    public function getFileAssetsPath($file)
+    {
+        $meta = $file->getMetaData();
+        $file_path = null;
+        if ($meta != null) {
+            if ($path = $meta['path']) {
+                $file_path = ASSETS_PATH . DIRECTORY_SEPARATOR . $path;
+            }
+        }
+        return $file_path;
+    }
+
+
+
 }
